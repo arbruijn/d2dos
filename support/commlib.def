@@ -1,48 +1,30 @@
 #lib commlib.lib
-D_GETM 0xaf570:0xaf5bd
-CHGPRI Change8259Priority_:0xb1c47
+D_GETM GetDsr_:GetCts_+17
+CHGPRI Change8259Priority_:Change8259Priority_+55
 FASTA386 _GetModemStatusGreenleafFast_:FastSet16550UseTXFifos_+6, 0:0, _isa_uart_addresses:_FastUse16550TXFifos+4
-FAST_SP  FastSavePortParameters_:0xb37aa, 0:0, 0:0, _saved_divisor_latch_1:_saved_mcr+0x20 #bssalign para
-D_RCT ReadCharTimed_:0x0b37f5
-MODEM HMReset_:0xb4279, 0xf759c:0xf75f9, _hm_delay_value:__hm_abort_key+4
-CLEARRX ClearRXBuffer_:0xb42ac
-D_RBT ReadBufferTimed_:0xb4336
+FAST_SP  FastSavePortParameters_:FastRestorePortParameters_+206, 0:0, 0:0, _saved_divisor_latch_1:_saved_mcr+0x20 #bssalign para
+D_RCT ReadCharTimed_:ReadCharTimed_+69
+MODEM HMReset_:HMSetLineFeedCharacterVB_+17, _hm_ATZ:_hm_empty_str+1, _hm_delay_value:__hm_abort_key+4
+CLEARRX ClearRXBuffer_:ClearRXBuffer_+44
+D_RBT ReadBufferTimed_:ReadBufferTimed_+134
 WAT386 _FarMemSet_:_GetDs_+12, 0:0, 0:0, _gl_dummy:_gl_dummy+4 #bssalign para
-TIMER timer_:0xcb299
-IRQ386 HookInterrupt_:0xcb838, 0:0, _gl_irq386_1:_gl_irq386_2+4, _IrqDataPtr32:_RealBlockPtr32+6 #bssalign para
-DPMI386 _GetCSAlias_:0xcbd23, 0:0, _gl_dpmi386_1:_gl_dpmi386_2+2
-DRIVERS _GenericNotSupportedA_:0xcbf35, _gl_msg_no_port_dump:0xf7c76, _PortList:_hooked+4, _gl_drivers_1:0x2c5207 #bssalign para
-ISMIC386 IsMicroChannel_:0xcc08d, 0:0, _gl_ismic386_1:_gl_ismic386_1+4
-GFC_MEM AllocateGreenleafPortStructure_:0xcc139
-FASTD386 _DumpChipData_:0xcc6fe, _gl_chipdata_msg1:_gl_dump_port_msg+27
-TIMER386  ElapsedTime_:0xcc780, 0:0, _gl_timer386_1:_gl_timer386_2+4
+TIMER timer_:PortKillTime_+37
+IRQ386 HookInterrupt_:_GetInterruptData_+112, 0:0, _gl_irq386_1:_gl_irq386_2+4, _IrqDataPtr32:_RealBlockPtr32+6 #bssalign para
+DPMI386 _GetCSAlias_:_LockRegion_+191, 0:0, _gl_dpmi386_1:_gl_dpmi386_2+2
+DRIVERS _GenericNotSupportedA_:_OutOfMemoryPort_+69, _gl_msg_no_port_dump:_gl_msg_no_port_dump+42, _PortList:_hooked+4, _gl_drivers_1:_gl_drivers_rest+116 #bssalign para
+ISMIC386 IsMicroChannel_:IsMicroChannel_+333, 0:0, _gl_ismic386_1:_gl_ismic386_1+4
+GFC_MEM AllocateGreenleafPortStructure_:FreeRXBuffer_+21
+FASTD386 _DumpChipData_:_DumpPortStatusGreenleafFast_+162, _gl_chipdata_msg1:_gl_dump_port_msg+27
+TIMER386  ElapsedTime_:ElapsedTime_+128, 0:0, _gl_timer386_1:_gl_timer386_2+4
 IDLEFDOS  _DOSDefaultIdleFunction_:SetPortIdleFunctionPtr_+6, 0:0, __PortIdleFunctionPtr: __PortIdleFunctionPtr+4
-D_WS WriteString_:0x0cc891
+D_WS WriteString_:WriteString_+113
 MABRTDOS _DOSDefaultAbortModemFunction_:SetAbortModemFunctionPtr_+6, 0:0, __AbortModemFunctionPtr:__AbortModemFunctionPtr+4
 KBD386 exit_function_:__disenk+9, 0:0, _gl_kbd386_initialized:__kbd_i1b_count+4
-KSTAT386 _gf_kbd_status:0xdd13e #textalign dword
-ASGETDI _asgetdivisor_:0xdaf66
-WINUTIL  WindowsEnhancedMode_:0xdb0e6, 0:0, _gl_winutil_1:_gl_winutil_3+4
+KSTAT386 _gf_kbd_status:_kbd_int_handler+14 #textalign dword
+ASGETDI _asgetdivisor_:_asgetdivisor_+150
+WINUTIL  WindowsEnhancedMode_:YieldDESQViewTimeSlice_+42, 0:0, _gl_winutil_1:_gl_winutil_3+4
 IRQDR386 __SegmentStartRR16:__SegmentEndRR16+4:REAL_RELOCATED_16:CODE #textdata #textalign dword
-#, 0:0:_DATA:DATA #textdata
-#STI386 __assti:0xe172d #textname PISRCODE
-STI386 0:0:REAL_RELOCATED_16:CODE,0:0:PISR_START:CODE,__assti:0xe172d:PISRCODE:CODE #textalign byte #textname PISRCODE
-#STI386 __assti:0xe172d:PISRCODE:CODE #textalign dword
-#STRTPC32 __SegmentStartPC32:__SegmentStartPC32+1 #textname PISRCODE
-#IRQDP386 __GreenleafFastIsr:__SegmentEndPC32+1, 0:0, __SegmentStartPD32:__SegmentEndPD32+1 #textname PISRCODE
+STI386 0:0:REAL_RELOCATED_16:CODE,0:0:PISR_START:CODE,__assti:__asoutb+22:PISRCODE:CODE #textalign byte #textname PISRCODE
 IRQDP386 __SegmentStartPC32:__SegmentStartPC32+1:PISR_START:CODE,__GreenleafFastIsr:__prot_irq_stub_9_PC32+11:PISRCODE:CODE,__SegmentEndPC32:__SegmentEndPC32+1:PISR_END:CODE, __SegmentStartPD32:__SegmentEndPD32:PISRDATA:DATA #endlabel #textalign byte #textname PISRCODE
-#SEGPC32 __SegmentStartPC32:__SegmentEndPC32+1, 0:0, __SegmentStartPD32:__SegmentEndPD32+1 #textname PISRCODE
 KILL386 __asi_kill_time:__asi_kill_time+1:PISRCODE:CODE #textalign byte
 DEBUG386 __foo:__foo+1:PISRCODE:CODE, __DgroupSelectorPD32:__VideoCursorPD32+6:PISRDATA:DATA #textalign byte
-#glint 0x00cb2a0:0x00cb838
-#glmem 0x0cb840:0x00cbf35
-#Bglport 0xcbf40:
-#glalloc 0x000cc090:0x000cc139
-#gldump 0xcc140:0x00cc6fe
-#gltime 0xcc700:0x00cc796
-#glhw 0xcc820:0x000cc891
-#gldosmod 0xcc8a0:0x0cc8da
-#glkbd 0xda980:0x000daec9
-#gldiv 0xdaed0:0xdaf66
-#gldiv2 0xdaf70:0xdb0e6
-#glrr 0x000e12e8:0x000e1849
