@@ -12,8 +12,10 @@ source: .SYMBOLIC
 	cd ..
 	support\gwbind original\descent2.exe source\main\descent2.exe
 
-clean: .SYMBOLIC
+cleanid: .SYMBOLIC
 	-support\idpatch source\ext\srcids.txt
+
+clean: cleanid .SYMBOLIC
 	cd support
 	wmake clean
 	cd ..
