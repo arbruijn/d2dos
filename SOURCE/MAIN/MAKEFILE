@@ -40,5 +40,6 @@ default: descent2.exe .SYMBOLIC
 .c.obj:
 	wcc386 $(CFLAGS) $(CFLAGS_MAIN) $<
 
+# add d li to enable debug info
 descent2.exe: $(OBJS) $(LLIBS)
 	*wlink option map,stack=50k,stub=$(%watcom)\binb\wstub.exe name $@ sys dos4g file { $(OBJS) } library { $(LLIBS) }
